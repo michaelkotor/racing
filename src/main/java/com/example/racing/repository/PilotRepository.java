@@ -1,7 +1,9 @@
 package com.example.racing.repository;
 
 import com.example.racing.model.Pilot;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PilotRepository extends CrudRepository<Pilot, Long> {
+@Repository
+public interface PilotRepository extends JpaRepository<Pilot, Long> {
 }

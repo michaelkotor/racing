@@ -7,13 +7,32 @@
 <body>
 <tbody>
 
-<div th:if="${reports != null}">
-    <h1>Result</h1>
-    <ul>
-        <th:block th:object="${reports}">
-            <li th:each="item : ${reports}" th:text="${item}">Item description here...</li>
-        </th:block>
-    </ul>
+<div>
+    <div id="search">Wait unit it get updates...</div>
+
+    <script>
+        var xhr = new XMLHttpRequest();
+
+        var i = 0;
+        let interval = 1000;
+        var refreshIntervalId = setInterval(function() {
+            doSomeThing();
+        }, interval);
+        doSomeThing = function () {
+            xhr.open('GET', '/update');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById("search").textContent=xhr.responseText;
+                    console.log('User\'s name is ' + xhr.responseText);
+                }
+                else {
+                    console.log('Request failed.  Returned status of ' + xhr.status);
+                    clearInterval(refreshIntervalId);
+                }
+            };
+            xhr.send();
+        }
+    </script>
 </div>
 </tbody>
 </body>

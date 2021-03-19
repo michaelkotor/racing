@@ -1,8 +1,6 @@
 package com.example.racing.config;
 
-import com.example.racing.messages.ReceiverEvent;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import com.example.racing.messages.impl.EventReceiverImpl;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -11,8 +9,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Locale;
 
 @org.springframework.context.annotation.Configuration
 public class Configuration {
@@ -36,8 +32,8 @@ public class Configuration {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(ReceiverEvent receiverEvent) {
-        return new MessageListenerAdapter(receiverEvent, "receiveMessage");
+    MessageListenerAdapter listenerAdapter(EventReceiverImpl receiverEventImpl) {
+        return new MessageListenerAdapter(receiverEventImpl, "receiveMessage");
     }
 
     @Bean
@@ -49,11 +45,4 @@ public class Configuration {
         container.setMessageListener(listenerAdapter);
         return container;
     }
-
-    @Bean
-    public FakeValuesService fakeValuesService() {
-        return new FakeValuesService(
-                new Locale("en-GB"), new RandomService());
-    }
-
 }
